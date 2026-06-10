@@ -1,0 +1,94 @@
+# files
+.cache 4096
+.gitattributes 1570
+.quant_summary.txt 3700121
+README.md 9991
+apache_2.0_license.md 11433
+chat_template.jinja 17466
+config.json 5185
+generation_config.json 357
+hf_quant_config.json 463
+model-00001-of-00002.safetensors 10002097536
+model-00002-of-00002.safetensors 8821758352
+model.safetensors.index.json 4656360
+processor_config.json 1689
+tokenizer.json 32169626
+tokenizer_config.json 2741
+
+# quant config
+{
+    "producer": {
+        "name": "modelopt",
+        "version": "0.45.0.dev127+ga3a02ca5b.d20260608"
+    },
+    "quantization": {
+        "quant_algo": "NVFP4",
+        "kv_cache_quant_algo": "FP8",
+        "group_size": 16,
+        "exclude_modules": [
+            "lm_head",
+            "*embed_vision*",
+            "*mlp*",
+            "*router*",
+            "*self_attn*",
+            "*self_conditioning*",
+            "*vision_tower*"
+        ]
+    }
+}
+
+## model-00001-of-00002.safetensors tensors 24616 header_bytes 3024256
+
+## model-00002-of-00002.safetensors tensors 22451 header_bytes 2780840
+
+# dtype counts {'F32': 23040, 'BF16': 987, 'F8_E4M3': 11520, 'U8': 11520}
+# category counts {'expert_or_moe': 46110, 'embedding': 1, 'other': 391, 'attention': 205, 'self_conditioning': 4, 'vision_or_mm': 356} total 47067
+
+## examples expert_or_moe
+('model.decoder.layers.0.experts.0.down_proj.input_scale', 'F32', [])
+('model.decoder.layers.0.experts.0.down_proj.weight_scale_2', 'F32', [])
+('model.decoder.layers.0.experts.0.gate_proj.input_scale', 'F32', [])
+('model.decoder.layers.0.experts.0.gate_proj.weight_scale_2', 'F32', [])
+('model.decoder.layers.0.experts.0.up_proj.input_scale', 'F32', [])
+('model.decoder.layers.0.experts.0.up_proj.weight_scale_2', 'F32', [])
+('model.decoder.layers.0.experts.1.down_proj.input_scale', 'F32', [])
+('model.decoder.layers.0.experts.1.down_proj.weight_scale_2', 'F32', [])
+
+## examples embedding
+('model.decoder.embed_tokens.weight', 'BF16', [262144, 2816])
+
+## examples other
+('model.decoder.layers.0.input_layernorm.weight', 'BF16', [2816])
+('model.decoder.layers.0.layer_scalar', 'BF16', [1])
+('model.decoder.layers.0.mlp.down_proj.weight', 'BF16', [2816, 2112])
+('model.decoder.layers.0.mlp.gate_proj.weight', 'BF16', [2112, 2816])
+('model.decoder.layers.0.mlp.up_proj.weight', 'BF16', [2112, 2816])
+('model.decoder.layers.0.post_feedforward_layernorm.weight', 'BF16', [2816])
+('model.decoder.layers.0.post_feedforward_layernorm_1.weight', 'BF16', [2816])
+('model.decoder.layers.0.post_feedforward_layernorm_2.weight', 'BF16', [2816])
+
+## examples attention
+('model.decoder.layers.0.post_attention_layernorm.weight', 'BF16', [2816])
+('model.decoder.layers.0.self_attn.k_norm.weight', 'BF16', [256])
+('model.decoder.layers.0.self_attn.k_proj.weight', 'BF16', [2048, 2816])
+('model.decoder.layers.0.self_attn.o_proj.weight', 'BF16', [2816, 4096])
+('model.decoder.layers.0.self_attn.q_norm.weight', 'BF16', [256])
+('model.decoder.layers.0.self_attn.q_proj.weight', 'BF16', [4096, 2816])
+('model.decoder.layers.0.self_attn.v_proj.weight', 'BF16', [2048, 2816])
+('model.decoder.layers.1.post_attention_layernorm.weight', 'BF16', [2816])
+
+## examples self_conditioning
+('model.decoder.self_conditioning.down_proj.weight', 'BF16', [2816, 2112])
+('model.decoder.self_conditioning.gate_proj.weight', 'BF16', [2112, 2816])
+('model.decoder.self_conditioning.pre_norm.weight', 'BF16', [2816])
+('model.decoder.self_conditioning.up_proj.weight', 'BF16', [2112, 2816])
+
+## examples vision_or_mm
+('model.encoder.embed_vision.embedding_projection.weight', 'BF16', [2816, 1152])
+('model.encoder.vision_tower.encoder.layers.0.input_layernorm.weight', 'BF16', [1152])
+('model.encoder.vision_tower.encoder.layers.0.mlp.down_proj.linear.weight', 'BF16', [1152, 4304])
+('model.encoder.vision_tower.encoder.layers.0.mlp.gate_proj.linear.weight', 'BF16', [4304, 1152])
+('model.encoder.vision_tower.encoder.layers.0.mlp.up_proj.linear.weight', 'BF16', [4304, 1152])
+('model.encoder.vision_tower.encoder.layers.0.post_attention_layernorm.weight', 'BF16', [1152])
+('model.encoder.vision_tower.encoder.layers.0.post_feedforward_layernorm.weight', 'BF16', [1152])
+('model.encoder.vision_tower.encoder.layers.0.pre_feedforward_layernorm.weight', 'BF16', [1152])
