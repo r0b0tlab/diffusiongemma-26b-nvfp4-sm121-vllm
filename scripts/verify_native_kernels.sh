@@ -5,7 +5,7 @@ OUT=${OUT:-evidence/kernels/native-kernel-check.txt}
 mkdir -p "$(dirname "$OUT")"
 {
   echo "# Native kernel verification $(date -Is)"
-  docker exec "$NAME" python3 - <<'PY'
+  docker exec -i "$NAME" python3 - <<'PY'
 import importlib, torch
 print('capability', torch.cuda.get_device_capability())
 try:
@@ -22,5 +22,5 @@ PY
   echo '## backend log lines'
   docker logs "$NAME" 2>&1 | grep -Ei 'nvfp4|modelopt|cutlass|flashinfer|marlin|emulation|triton' || true
   echo '## forbidden fallback count (excluding potential)'
-  docker logs "$NAME" 2>&1 | grep -Ei 'marlin|emulation' | grep -vi potential | wc -l
+  (docker logs "$NAME" 2>&1 | grep -Ei 'marlin|emulation' | grep -vi potential || true) | wc -l
 } | tee "$OUT"
