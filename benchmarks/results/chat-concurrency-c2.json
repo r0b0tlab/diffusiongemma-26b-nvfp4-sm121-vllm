@@ -1,0 +1,110 @@
+{
+  "summary": {
+    "concurrency": 2,
+    "max_tokens": 256,
+    "requests": 8,
+    "ok": 8,
+    "errors": 0,
+    "wall_s": 13.60565697399943,
+    "request_throughput_rps": 0.5879907170442481,
+    "output_tokens": 2048,
+    "prompt_tokens": 304,
+    "output_tps": 150.5256235633275,
+    "total_tps": 172.86927081100896,
+    "latency_avg_s": 3.3333392605009067,
+    "latency_p50_s": 2.9165487060017767,
+    "latency_p90_s": 4.9149022640012845,
+    "latency_p95_s": 5.284223999002279,
+    "latency_max_s": 5.284223999002279
+  },
+  "records": [
+    {
+      "idx": 0,
+      "ok": true,
+      "latency_s": 2.7226912830010406,
+      "error": null,
+      "finish_reason": "length",
+      "prompt_tokens": 40,
+      "completion_tokens": 256,
+      "total_tokens": 296,
+      "text_preview": "### Technical Summary: FP8 KV Cache for NVFP4 MoE Serving\n\nServing large-scale Mixture-of-Experts (MoE) models with NVFP4 quantization presents significant memory bandwidth and capacity challenges. Implementing an FP8 KV cache provides the "
+    },
+    {
+      "idx": 1,
+      "ok": true,
+      "latency_s": 2.8615162140013126,
+      "error": null,
+      "finish_reason": "length",
+      "prompt_tokens": 40,
+      "completion_tokens": 256,
+      "total_tokens": 296,
+      "text_preview": "For SM121 (Blackwell) FP4 inference, native kernels like CUTLASS and FlashInfer are critical for three primary reasons:\n\n**1. Hardware Acceleration (Tensor Cores)**\nBlackwell introduces dedicated hardware support for **FP4** (4-bit floating"
+    },
+    {
+      "idx": 2,
+      "ok": true,
+      "latency_s": 4.9149022640012845,
+      "error": null,
+      "finish_reason": "length",
+      "prompt_tokens": 34,
+      "completion_tokens": 256,
+      "total_tokens": 290,
+      "text_preview": "To ensure a vLLM container is production-ready, you must validate four key dimensions: **environment compatibility, model performance, API stability, and resource efficiency.**\n\nBelow is a checklist of practical checks along with the specif"
+    },
+    {
+      "idx": 3,
+      "ok": true,
+      "latency_s": 5.284223999002279,
+      "error": null,
+      "finish_reason": "length",
+      "prompt_tokens": 38,
+      "completion_tokens": 256,
+      "total_tokens": 294,
+      "text_preview": "### Deployment Note: DiffusionGemma on ARM64 (GB10-class)\n\n**Target Hardware:** ARM64 high-performance instance (e.g., AWS Graviton3+, Ampere Altra-based nodes).\n**Resource Profile:** ~10GB VRAM/System Memory class.\n\n---\n\n#### 1. Environmen"
+    },
+    {
+      "idx": 4,
+      "ok": true,
+      "latency_s": 3.0711827909981366,
+      "error": null,
+      "finish_reason": "length",
+      "prompt_tokens": 40,
+      "completion_tokens": 256,
+      "total_tokens": 296,
+      "text_preview": "### Technical Summary: FP8 KV Cache for NVFP4 MoE Serving\n\nImplementing FP8 KV cache while serving Mixture-of-Experts (MoE) models utilizing NVFP4 for weights/activations provides significant performance advantages in high-throughput infere"
+    },
+    {
+      "idx": 5,
+      "ok": true,
+      "latency_s": 2.9165487060017767,
+      "error": null,
+      "finish_reason": "length",
+      "prompt_tokens": 40,
+      "completion_tokens": 256,
+      "total_tokens": 296,
+      "text_preview": "For SM121 (Blackwell) architecture performing FP4 inference, native kernels from libraries like **CUTLASS** and **FlashInfer** are critical for three primary reasons:\n\n**1. Hardware Acceleration (Tensor Cores)** \nBlackwell introduces dedica"
+    },
+    {
+      "idx": 6,
+      "ok": true,
+      "latency_s": 2.3543557960001635,
+      "error": null,
+      "finish_reason": "length",
+      "prompt_tokens": 34,
+      "completion_tokens": 256,
+      "total_tokens": 290,
+      "text_preview": "To validate a vLLM container before production deployment, you must verify four pillars: **Hardware compatibility, Model integrity, Performance benchmarks, and API stability.**\n\nBelow is a checklist of practical checks, along with the speci"
+    },
+    {
+      "idx": 7,
+      "ok": true,
+      "latency_s": 2.54129303100126,
+      "error": null,
+      "finish_reason": "length",
+      "prompt_tokens": 38,
+      "completion_tokens": 256,
+      "total_tokens": 294,
+      "text_preview": "### Deployment Note: DiffusionGemma on ARM64 (GB10-class)\n\n**Target Hardware:** ARM64 Architecture (e.g., NVIDIA Grace Hopper, AWS Graviton, or high-end Ampere instances).\n**Model Profile:** Optimized high-throughput image generation/diffus"
+    }
+  ]
+}

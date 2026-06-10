@@ -1,0 +1,77 @@
+[
+  {
+    "prompt_preview": "Write a 12-item checklist for publishing an optimized vLLM NVFP4 container. Be specific.",
+    "max_tokens": 512,
+    "wall_s": 4.254243262003001,
+    "ttft_s": 2.3971286690029956,
+    "stream_chunks": 3,
+    "stream_chars": 2230,
+    "avg_inter_chunk_s": 0.9285265364997031,
+    "max_inter_chunk_s": 1.8569387850002386,
+    "chunk_timeline_head": [
+      {
+        "t_rel_s": 2.3971286690029956,
+        "chars": 0
+      },
+      {
+        "t_rel_s": 2.397242957002163,
+        "chars": 1070
+      },
+      {
+        "t_rel_s": 4.254181742002402,
+        "chars": 1160
+      }
+    ],
+    "case": 0
+  },
+  {
+    "prompt_preview": "Explain block diffusion inference in practical serving terms. Include latency and throughput implications.",
+    "max_tokens": 512,
+    "wall_s": 4.513557959002355,
+    "ttft_s": 2.2220619130021078,
+    "stream_chunks": 3,
+    "stream_chars": 2285,
+    "avg_inter_chunk_s": 1.145724206999148,
+    "max_inter_chunk_s": 2.291344125998876,
+    "chunk_timeline_head": [
+      {
+        "t_rel_s": 2.2220619130021078,
+        "chars": 0
+      },
+      {
+        "t_rel_s": 2.222166201001528,
+        "chars": 1160
+      },
+      {
+        "t_rel_s": 4.513510327000404,
+        "chars": 1125
+      }
+    ],
+    "case": 1
+  },
+  {
+    "prompt_preview": "Give a compact benchmark report template for SM121 vLLM containers.",
+    "max_tokens": 512,
+    "wall_s": 3.8306240040001285,
+    "ttft_s": 1.928126833998249,
+    "stream_chunks": 3,
+    "stream_chars": 1432,
+    "avg_inter_chunk_s": 0.9512257450005563,
+    "max_inter_chunk_s": 1.9024101620016154,
+    "chunk_timeline_head": [
+      {
+        "t_rel_s": 1.928126833998249,
+        "chars": 0
+      },
+      {
+        "t_rel_s": 1.9281681619977462,
+        "chars": 707
+      },
+      {
+        "t_rel_s": 3.8305783239993616,
+        "chars": 725
+      }
+    ],
+    "case": 2
+  }
+]
