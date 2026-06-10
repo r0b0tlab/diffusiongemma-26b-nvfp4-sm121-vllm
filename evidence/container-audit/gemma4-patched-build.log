@@ -1,0 +1,152 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.diffusiongemma
+#1 transferring dockerfile: 552B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/vllm/vllm-openai:gemma4
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/4] FROM docker.io/vllm/vllm-openai:gemma4
+#4 CACHED
+
+#5 [internal] load build context
+#5 transferring context: 1.00kB done
+#5 DONE 0.0s
+
+#6 [2/4] RUN apt-get update && apt-get install -y --no-install-recommends git patch && rm -rf /var/lib/apt/lists/*
+#6 0.380 Get:1 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/sbsa  InRelease [1579 B]
+#6 0.396 Get:2 http://ports.ubuntu.com/ubuntu-ports jammy InRelease [270 kB]
+#6 0.464 Get:3 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/sbsa  Packages [2157 kB]
+#6 0.483 Get:4 http://ports.ubuntu.com/ubuntu-ports jammy-updates InRelease [128 kB]
+#6 0.535 Get:5 http://ports.ubuntu.com/ubuntu-ports jammy-backports InRelease [127 kB]
+#6 0.583 Get:6 http://ports.ubuntu.com/ubuntu-ports jammy-security InRelease [129 kB]
+#6 0.614 Get:7 http://ports.ubuntu.com/ubuntu-ports jammy/restricted arm64 Packages [24.2 kB]
+#6 0.620 Get:8 http://ports.ubuntu.com/ubuntu-ports jammy/multiverse arm64 Packages [224 kB]
+#6 0.631 Get:9 http://ports.ubuntu.com/ubuntu-ports jammy/universe arm64 Packages [17.2 MB]
+#6 0.831 Get:10 https://ppa.launchpadcontent.net/deadsnakes/ppa/ubuntu jammy InRelease [18.1 kB]
+#6 0.859 Get:11 http://ports.ubuntu.com/ubuntu-ports jammy/main arm64 Packages [1758 kB]
+#6 0.884 Get:12 http://ports.ubuntu.com/ubuntu-ports jammy-updates/restricted arm64 Packages [7465 kB]
+#6 0.955 Get:13 http://ports.ubuntu.com/ubuntu-ports jammy-updates/universe arm64 Packages [1671 kB]
+#6 0.970 Get:14 http://ports.ubuntu.com/ubuntu-ports jammy-updates/multiverse arm64 Packages [63.5 kB]
+#6 0.970 Get:15 http://ports.ubuntu.com/ubuntu-ports jammy-updates/main arm64 Packages [4164 kB]
+#6 1.006 Get:16 http://ports.ubuntu.com/ubuntu-ports jammy-backports/universe arm64 Packages [33.7 kB]
+#6 1.007 Get:17 http://ports.ubuntu.com/ubuntu-ports jammy-backports/main arm64 Packages [82.4 kB]
+#6 1.007 Get:18 http://ports.ubuntu.com/ubuntu-ports jammy-security/restricted arm64 Packages [7173 kB]
+#6 1.075 Get:19 http://ports.ubuntu.com/ubuntu-ports jammy-security/main arm64 Packages [3830 kB]
+#6 1.129 Get:20 http://ports.ubuntu.com/ubuntu-ports jammy-security/universe arm64 Packages [1372 kB]
+#6 1.141 Get:21 http://ports.ubuntu.com/ubuntu-ports jammy-security/multiverse arm64 Packages [56.7 kB]
+#6 1.153 Get:22 https://ppa.launchpadcontent.net/deadsnakes/ppa/ubuntu jammy/main arm64 Packages [38.9 kB]
+#6 1.917 Fetched 48.0 MB in 2s (28.3 MB/s)
+#6 1.917 Reading package lists...
+#6 2.513 Reading package lists...
+#6 3.089 Building dependency tree...
+#6 3.249 Reading state information...
+#6 3.371 patch is already the newest version (2.7.6-7build2).
+#6 3.371 patch set to manually installed.
+#6 3.371 The following packages were automatically installed and are no longer required:
+#6 3.372   libcusolver-12-9 libcusparse-12-9
+#6 3.372 Use 'apt autoremove' to remove them.
+#6 3.372 The following additional packages will be installed:
+#6 3.372   git-man liberror-perl
+#6 3.373 Suggested packages:
+#6 3.373   gettext-base git-daemon-run | git-daemon-sysvinit git-doc git-email git-gui
+#6 3.373   gitk gitweb git-cvs git-mediawiki git-svn
+#6 3.373 Recommended packages:
+#6 3.373   less ssh-client
+#6 3.419 The following NEW packages will be installed:
+#6 3.420   git git-man liberror-perl
+#6 3.598 0 upgraded, 3 newly installed, 0 to remove and 62 not upgraded.
+#6 3.598 Need to get 4202 kB of archives.
+#6 3.598 After this operation, 20.6 MB of additional disk space will be used.
+#6 3.598 Get:1 http://ports.ubuntu.com/ubuntu-ports jammy/main arm64 liberror-perl all 0.17029-1 [26.5 kB]
+#6 3.626 Get:2 http://ports.ubuntu.com/ubuntu-ports jammy-updates/main arm64 git-man all 1:2.34.1-1ubuntu1.17 [954 kB]
+#6 3.705 Get:3 http://ports.ubuntu.com/ubuntu-ports jammy-updates/main arm64 git arm64 1:2.34.1-1ubuntu1.17 [3222 kB]
+#6 3.868 debconf: delaying package configuration, since apt-utils is not installed
+#6 3.899 Fetched 4202 kB in 0s (12.0 MB/s)
+#6 3.935 Selecting previously unselected package liberror-perl.
+#6 3.935 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 22535 files and directories currently installed.)
+#6 3.950 Preparing to unpack .../liberror-perl_0.17029-1_all.deb ...
+#6 3.957 Unpacking liberror-perl (0.17029-1) ...
+#6 4.012 Selecting previously unselected package git-man.
+#6 4.013 Preparing to unpack .../git-man_1%3a2.34.1-1ubuntu1.17_all.deb ...
+#6 4.019 Unpacking git-man (1:2.34.1-1ubuntu1.17) ...
+#6 4.072 Selecting previously unselected package git.
+#6 4.073 Preparing to unpack .../git_1%3a2.34.1-1ubuntu1.17_arm64.deb ...
+#6 4.085 Unpacking git (1:2.34.1-1ubuntu1.17) ...
+#6 4.219 Setting up liberror-perl (0.17029-1) ...
+#6 4.238 Setting up git-man (1:2.34.1-1ubuntu1.17) ...
+#6 4.258 Setting up git (1:2.34.1-1ubuntu1.17) ...
+#6 DONE 4.3s
+
+#7 [3/4] COPY third_party/spark-vllm-docker/mods/diffusiongemma /opt/diffusiongemma-mods
+#7 DONE 0.1s
+
+#8 [4/4] RUN bash /opt/diffusiongemma-mods/run.sh
+#8 0.167 error: patch failed: vllm/benchmarks/serve.py:887
+#8 0.167 error: vllm/benchmarks/serve.py: patch does not apply
+#8 0.168 error: patch failed: vllm/config/vllm.py:521
+#8 0.168 error: vllm/config/vllm.py: patch does not apply
+#8 0.168 error: patch failed: vllm/engine/arg_utils.py:614
+#8 0.168 error: vllm/engine/arg_utils.py: patch does not apply
+#8 0.168 error: vllm/model_executor/layers/fused_moe/experts/flashinfer_cutlass_moe.py: No such file or directory
+#8 0.168 error: patch failed: vllm/model_executor/layers/fused_moe/experts/trtllm_nvfp4_moe.py:142
+#8 0.168 error: vllm/model_executor/layers/fused_moe/experts/trtllm_nvfp4_moe.py: patch does not apply
+#8 0.168 error: patch failed: vllm/model_executor/models/config.py:105
+#8 0.168 error: vllm/model_executor/models/config.py: patch does not apply
+#8 0.169 error: patch failed: vllm/model_executor/models/registry.py:402
+#8 0.169 error: vllm/model_executor/models/registry.py: patch does not apply
+#8 0.169 error: patch failed: vllm/tool_parsers/gemma4_tool_parser.py:390
+#8 0.169 error: vllm/tool_parsers/gemma4_tool_parser.py: patch does not apply
+#8 0.169 error: patch failed: vllm/transformers_utils/config.py:96
+#8 0.169 error: vllm/transformers_utils/config.py: patch does not apply
+#8 0.169 error: patch failed: vllm/transformers_utils/configs/__init__.py:26
+#8 0.169 error: vllm/transformers_utils/configs/__init__.py: patch does not apply
+#8 0.169 error: patch failed: vllm/transformers_utils/model_arch_config_convertor.py:582
+#8 0.169 error: vllm/transformers_utils/model_arch_config_convertor.py: patch does not apply
+#8 0.169 error: patch failed: vllm/v1/attention/backends/fa_utils.py:131
+#8 0.169 error: vllm/v1/attention/backends/fa_utils.py: patch does not apply
+#8 0.169 error: vllm/v1/attention/ops/triton_attention_helpers.py: No such file or directory
+#8 0.170 error: patch failed: vllm/v1/attention/ops/triton_unified_attention.py:215
+#8 0.170 error: vllm/v1/attention/ops/triton_unified_attention.py: patch does not apply
+#8 0.170 error: patch failed: vllm/v1/engine/core.py:155
+#8 0.170 error: vllm/v1/engine/core.py: patch does not apply
+#8 0.171 error: patch failed: vllm/v1/structured_output/request.py:7
+#8 0.171 error: vllm/v1/structured_output/request.py: patch does not apply
+#8 0.171 error: patch failed: vllm/v1/worker/gpu/attn_utils.py:392
+#8 0.171 error: vllm/v1/worker/gpu/attn_utils.py: patch does not apply
+#8 0.171 error: patch failed: vllm/v1/worker/gpu/model_runner.py:78
+#8 0.171 error: vllm/v1/worker/gpu/model_runner.py: patch does not apply
+#8 0.171 error: patch failed: vllm/v1/worker/gpu/sample/sampler.py:12
+#8 0.171 error: vllm/v1/worker/gpu/sample/sampler.py: patch does not apply
+#8 0.171 error: patch failed: vllm/v1/worker/gpu/spec_decode/rejection_sampler.py:6
+#8 0.171 error: vllm/v1/worker/gpu/spec_decode/rejection_sampler.py: patch does not apply
+#8 0.171 error: patch failed: vllm/v1/worker/gpu/warmup.py:30
+#8 0.171 error: vllm/v1/worker/gpu/warmup.py: patch does not apply
+#8 0.171 [diffusiongemma] Patch could not be applied to installed vLLM.
+#8 ERROR: process "/bin/sh -c bash /opt/diffusiongemma-mods/run.sh" did not complete successfully: exit code: 1
+------
+ > [4/4] RUN bash /opt/diffusiongemma-mods/run.sh:
+0.171 error: vllm/v1/worker/gpu/attn_utils.py: patch does not apply
+0.171 error: patch failed: vllm/v1/worker/gpu/model_runner.py:78
+0.171 error: vllm/v1/worker/gpu/model_runner.py: patch does not apply
+0.171 error: patch failed: vllm/v1/worker/gpu/sample/sampler.py:12
+0.171 error: vllm/v1/worker/gpu/sample/sampler.py: patch does not apply
+0.171 error: patch failed: vllm/v1/worker/gpu/spec_decode/rejection_sampler.py:6
+0.171 error: vllm/v1/worker/gpu/spec_decode/rejection_sampler.py: patch does not apply
+0.171 error: patch failed: vllm/v1/worker/gpu/warmup.py:30
+0.171 error: vllm/v1/worker/gpu/warmup.py: patch does not apply
+0.171 [diffusiongemma] Patch could not be applied to installed vLLM.
+------
+Dockerfile.diffusiongemma:8
+--------------------
+   6 |     RUN apt-get update && apt-get install -y --no-install-recommends git patch && rm -rf /var/lib/apt/lists/*
+   7 |     COPY third_party/spark-vllm-docker/mods/diffusiongemma /opt/diffusiongemma-mods
+   8 | >>> RUN bash /opt/diffusiongemma-mods/run.sh
+   9 |     
+--------------------
+ERROR: failed to build: failed to solve: process "/bin/sh -c bash /opt/diffusiongemma-mods/run.sh" did not complete successfully: exit code: 1

@@ -1,0 +1,128 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.v0220-diffusiongemma
+#1 transferring dockerfile: 581B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/vllm/vllm-openai:v0.22.0-aarch64-ubuntu2404
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/4] FROM docker.io/vllm/vllm-openai:v0.22.0-aarch64-ubuntu2404
+#4 CACHED
+
+#5 [internal] load build context
+#5 transferring context: 1.00kB done
+#5 DONE 0.0s
+
+#6 [2/4] RUN apt-get update && apt-get install -y --no-install-recommends git patch && rm -rf /var/lib/apt/lists/*
+#6 0.279 Get:1 http://ports.ubuntu.com/ubuntu-ports noble InRelease [256 kB]
+#6 0.325 Get:2 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/sbsa  InRelease [1579 B]
+#6 0.425 Get:3 http://ports.ubuntu.com/ubuntu-ports noble-updates InRelease [126 kB]
+#6 0.480 Get:4 http://ports.ubuntu.com/ubuntu-ports noble-backports InRelease [126 kB]
+#6 0.489 Get:5 https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/sbsa  Packages [1442 kB]
+#6 0.535 Get:6 http://ports.ubuntu.com/ubuntu-ports noble-security InRelease [126 kB]
+#6 0.560 Get:7 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 Packages [1776 kB]
+#6 0.640 Get:8 http://ports.ubuntu.com/ubuntu-ports noble/multiverse arm64 Packages [274 kB]
+#6 0.646 Get:9 http://ports.ubuntu.com/ubuntu-ports noble/restricted arm64 Packages [113 kB]
+#6 0.652 Get:10 http://ports.ubuntu.com/ubuntu-ports noble/universe arm64 Packages [19.0 MB]
+#6 0.821 Get:11 https://ppa.launchpadcontent.net/deadsnakes/ppa/ubuntu noble InRelease [17.8 kB]
+#6 0.886 Get:12 http://ports.ubuntu.com/ubuntu-ports noble-updates/restricted arm64 Packages [5707 kB]
+#6 0.936 Get:13 http://ports.ubuntu.com/ubuntu-ports noble-updates/multiverse arm64 Packages [74.2 kB]
+#6 0.936 Get:14 http://ports.ubuntu.com/ubuntu-ports noble-updates/universe arm64 Packages [2167 kB]
+#6 0.957 Get:15 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 Packages [2670 kB]
+#6 0.982 Get:16 http://ports.ubuntu.com/ubuntu-ports noble-backports/main arm64 Packages [48.9 kB]
+#6 0.985 Get:17 http://ports.ubuntu.com/ubuntu-ports noble-backports/multiverse arm64 Packages [671 B]
+#6 0.989 Get:18 http://ports.ubuntu.com/ubuntu-ports noble-backports/universe arm64 Packages [36.3 kB]
+#6 0.994 Get:19 http://ports.ubuntu.com/ubuntu-ports noble-security/main arm64 Packages [2315 kB]
+#6 1.019 Get:20 http://ports.ubuntu.com/ubuntu-ports noble-security/universe arm64 Packages [1559 kB]
+#6 1.032 Get:21 http://ports.ubuntu.com/ubuntu-ports noble-security/restricted arm64 Packages [5450 kB]
+#6 1.081 Get:22 https://ppa.launchpadcontent.net/deadsnakes/ppa/ubuntu noble/main arm64 Packages [40.6 kB]
+#6 1.081 Get:23 http://ports.ubuntu.com/ubuntu-ports noble-security/multiverse arm64 Packages [69.4 kB]
+#6 1.760 Fetched 43.4 MB in 2s (27.9 MB/s)
+#6 1.760 Reading package lists...
+#6 2.337 W: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/sbsa/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
+#6 2.351 Reading package lists...
+#6 2.900 Building dependency tree...
+#6 3.056 Reading state information...
+#6 3.216 patch is already the newest version (2.7.6-7build3).
+#6 3.216 patch set to manually installed.
+#6 3.216 The following packages were automatically installed and are no longer required:
+#6 3.216   libcublas-13-0 libcusolver-13-0 libcusparse-13-0
+#6 3.216 Use 'apt autoremove' to remove them.
+#6 3.217 The following additional packages will be installed:
+#6 3.217   git-man liberror-perl
+#6 3.217 Suggested packages:
+#6 3.217   gettext-base git-daemon-run | git-daemon-sysvinit git-doc git-email git-gui
+#6 3.217   gitk gitweb git-cvs git-mediawiki git-svn
+#6 3.217 Recommended packages:
+#6 3.217   less ssh-client
+#6 3.277 The following NEW packages will be installed:
+#6 3.278   git git-man liberror-perl
+#6 3.346 0 upgraded, 3 newly installed, 0 to remove and 35 not upgraded.
+#6 3.346 Need to get 4899 kB of archives.
+#6 3.346 After this operation, 24.6 MB of additional disk space will be used.
+#6 3.346 Get:1 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 liberror-perl all 0.17029-2 [25.6 kB]
+#6 3.371 Get:2 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 git-man all 1:2.43.0-1ubuntu7.3 [1100 kB]
+#6 3.466 Get:3 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 git arm64 1:2.43.0-1ubuntu7.3 [3774 kB]
+#6 3.666 debconf: delaying package configuration, since apt-utils is not installed
+#6 3.702 Fetched 4899 kB in 0s (20.0 MB/s)
+#6 3.742 Selecting previously unselected package liberror-perl.
+#6 3.742 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 21287 files and directories currently installed.)
+#6 3.914 Preparing to unpack .../liberror-perl_0.17029-2_all.deb ...
+#6 3.924 Unpacking liberror-perl (0.17029-2) ...
+#6 3.978 Selecting previously unselected package git-man.
+#6 3.979 Preparing to unpack .../git-man_1%3a2.43.0-1ubuntu7.3_all.deb ...
+#6 3.985 Unpacking git-man (1:2.43.0-1ubuntu7.3) ...
+#6 4.041 Selecting previously unselected package git.
+#6 4.043 Preparing to unpack .../git_1%3a2.43.0-1ubuntu7.3_arm64.deb ...
+#6 4.053 Unpacking git (1:2.43.0-1ubuntu7.3) ...
+#6 4.198 Setting up liberror-perl (0.17029-2) ...
+#6 4.217 Setting up git-man (1:2.43.0-1ubuntu7.3) ...
+#6 4.238 Setting up git (1:2.43.0-1ubuntu7.3) ...
+#6 DONE 4.3s
+
+#7 [3/4] COPY third_party/spark-vllm-docker/mods/diffusiongemma /opt/diffusiongemma-mods
+#7 DONE 0.0s
+
+#8 [4/4] RUN bash /opt/diffusiongemma-mods/run.sh
+#8 0.183 error: patch failed: vllm/benchmarks/serve.py:887
+#8 0.183 error: vllm/benchmarks/serve.py: patch does not apply
+#8 0.185 error: patch failed: vllm/model_executor/models/registry.py:402
+#8 0.185 error: vllm/model_executor/models/registry.py: patch does not apply
+#8 0.185 error: patch failed: vllm/transformers_utils/config.py:96
+#8 0.185 error: vllm/transformers_utils/config.py: patch does not apply
+#8 0.185 error: patch failed: vllm/transformers_utils/configs/__init__.py:26
+#8 0.185 error: vllm/transformers_utils/configs/__init__.py: patch does not apply
+#8 0.185 error: patch failed: vllm/transformers_utils/model_arch_config_convertor.py:582
+#8 0.185 error: vllm/transformers_utils/model_arch_config_convertor.py: patch does not apply
+#8 0.187 error: patch failed: vllm/v1/worker/gpu/model_runner.py:78
+#8 0.187 error: vllm/v1/worker/gpu/model_runner.py: patch does not apply
+#8 0.187 error: patch failed: vllm/v1/worker/gpu/sample/sampler.py:12
+#8 0.187 error: vllm/v1/worker/gpu/sample/sampler.py: patch does not apply
+#8 0.187 [diffusiongemma] Patch could not be applied to installed vLLM.
+#8 ERROR: process "/bin/sh -c bash /opt/diffusiongemma-mods/run.sh" did not complete successfully: exit code: 1
+------
+ > [4/4] RUN bash /opt/diffusiongemma-mods/run.sh:
+0.185 error: vllm/transformers_utils/config.py: patch does not apply
+0.185 error: patch failed: vllm/transformers_utils/configs/__init__.py:26
+0.185 error: vllm/transformers_utils/configs/__init__.py: patch does not apply
+0.185 error: patch failed: vllm/transformers_utils/model_arch_config_convertor.py:582
+0.185 error: vllm/transformers_utils/model_arch_config_convertor.py: patch does not apply
+0.187 error: patch failed: vllm/v1/worker/gpu/model_runner.py:78
+0.187 error: vllm/v1/worker/gpu/model_runner.py: patch does not apply
+0.187 error: patch failed: vllm/v1/worker/gpu/sample/sampler.py:12
+0.187 error: vllm/v1/worker/gpu/sample/sampler.py: patch does not apply
+0.187 [diffusiongemma] Patch could not be applied to installed vLLM.
+------
+Dockerfile.v0220-diffusiongemma:8
+--------------------
+   6 |     RUN apt-get update && apt-get install -y --no-install-recommends git patch && rm -rf /var/lib/apt/lists/*
+   7 |     COPY third_party/spark-vllm-docker/mods/diffusiongemma /opt/diffusiongemma-mods
+   8 | >>> RUN bash /opt/diffusiongemma-mods/run.sh
+   9 |     
+--------------------
+ERROR: failed to build: failed to solve: process "/bin/sh -c bash /opt/diffusiongemma-mods/run.sh" did not complete successfully: exit code: 1
