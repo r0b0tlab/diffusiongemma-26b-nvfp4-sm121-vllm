@@ -1,0 +1,332 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>DiffusionGemma 26B A4B NVFP4 — SM121 vLLM Container Benchmark</title><style>
+:root{--bg:#050510;--panel:#0b0b16;--panel2:#10101f;--ink:#f0f0f5;--muted:#9ca3af;--line:#24243a;--green:#00ff88;--cyan:#00e5ff;--mag:#ff00e5;--amber:#ffb800;--bad:#ff4d6d;--mono:"JetBrains Mono","SFMono-Regular",Consolas,monospace;--sans:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.45}main{width:min(1380px,calc(100% - 32px));margin:0 auto;padding:36px 0 70px}.hero{border:1px solid var(--line);background:#080812;padding:30px;border-radius:24px;position:relative;overflow:hidden}.eyebrow{font-family:var(--mono);font-size:12px;color:var(--cyan);letter-spacing:.16em;text-transform:uppercase}h1{font-size:clamp(34px,5vw,72px);line-height:.95;margin:12px 0 18px;letter-spacing:-.055em}.subtitle{max-width:960px;color:#c7c8d4;font-size:clamp(16px,2vw,21px)}.badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}.badge{font-family:var(--mono);font-size:12px;color:#d9fbff;border:1px solid #1d5660;background:#07191c;padding:8px 10px;border-radius:999px}.grid{display:grid;gap:16px}.metrics{grid-template-columns:repeat(4,minmax(0,1fr));margin:22px 0}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;min-width:0}.k{font-family:var(--mono);font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.v{font-family:var(--mono);font-size:clamp(26px,4vw,46px);margin-top:6px;font-weight:800;letter-spacing:-.04em}.green{color:var(--green)}.cyan{color:var(--cyan)}.mag{color:var(--mag)}.amber{color:var(--amber)}section{margin-top:28px}h2{font-size:28px;margin:0 0 12px;letter-spacing:-.03em}h3{margin:0 0 8px;font-size:18px}.cols{grid-template-columns:1.2fr .8fr}.two{grid-template-columns:1fr 1fr}table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:13px;overflow:hidden;border-radius:14px}th,td{padding:11px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{color:var(--cyan);background:#0f1020;font-size:12px;text-transform:uppercase;letter-spacing:.06em}td{color:#e6e6ee}tr:last-child td{border-bottom:0}pre{white-space:pre-wrap;word-break:break-word;background:#070710;border:1px solid var(--line);border-radius:14px;padding:14px;max-height:440px;overflow:auto;font-family:var(--mono);font-size:12px;color:#cfd2dd}canvas{width:100%;height:270px;background:#070710;border:1px solid var(--line);border-radius:14px}.findings{grid-template-columns:repeat(3,minmax(0,1fr))}.finding strong{display:block;color:var(--ink);margin-bottom:8px}.finding{color:#c9cad6}.footer{margin-top:34px;color:#777b8c;font-size:12px;font-family:var(--mono);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}@media(max-width:900px){.metrics,.cols,.two,.findings{grid-template-columns:1fr}main{width:min(100% - 20px,720px);padding-top:18px}.hero{padding:20px;border-radius:18px}table{font-size:11px}th,td{padding:8px 6px}}
+</style></head><body><main><div class="hero"><div class="eyebrow">r0b0tlab benchmark artifact · SM121 ARM64 · vLLM day-0 lane</div><h1>DiffusionGemma 26B A4B NVFP4 on vLLM</h1><p class="subtitle">A fully patched SM121 container running <b>nvidia/diffusiongemma-26B-A4B-it-NVFP4</b> with ModelOpt FP4, FP8 KV cache, V2 model runner, TRITON attention, and native FlashInfer/CUTLASS MoE kernels. Benchmarks use OpenAI chat completions because raw completions produced invalid dLLM text while chat-template generation passed correctness checks.</p><div class="badges"><span class="badge">image: ghcr.io/r0b0tlab/...:spark-dgemma-patched</span><span class="badge">vLLM 0.22.1rc1.dev330+g6deb05e0e</span><span class="badge">CUDA 13.0 / Torch 2.11</span><span class="badge">KV cache: FP8</span><span class="badge">max_model_len: 65,536</span></div></div>
+<div class="grid metrics"><div class="card"><div class="k">Best output throughput</div><div class="v green">242.93</div><div class="k">tok/s at c16</div></div><div class="card"><div class="k">c16 output throughput</div><div class="v cyan">242.93</div><div class="k">tok/s, 64/64 OK</div></div><div class="card"><div class="k">Longest verified prompt</div><div class="v mag">64034</div><div class="k">tokens, 29.54s</div></div><div class="card"><div class="k">Native fallback count</div><div class="v green">0</div><div class="k">Marlin/emulation excluded</div></div></div>
+<section class="grid findings"><div class="card finding"><strong class="green">Native FP4 path proven</strong> Runtime logs show <code>FLASHINFER_CUTLASS</code> selected from possible NVFP4 MoE backends. No Marlin/emulation fallback lines were detected.</div><div class="card finding"><strong class="cyan">65K/c16 configuration is viable</strong> vLLM reported 5,272,678 GPU KV-cache tokens and maximum concurrency of 80.45× for 65,536-token requests with FP8 KV.</div><div class="card finding"><strong class="amber">Use chat, not completions</strong> Chat endpoint produced correct answers. Raw completions emitted garbled dLLM text and are not used for publication metrics.</div></section>
+<section class="grid cols"><div class="card"><h2>Concurrency ladder</h2><canvas id="throughput"></canvas><table><thead><tr><th>Concurrency</th><th>OK</th><th>Output tok/s</th><th>Total tok/s</th><th>P50 lat</th><th>P95 lat</th><th>Max lat</th></tr></thead><tbody><tr><td>c1</td><td>4/4</td><td>146.32</td><td>168.04</td><td>1.81</td><td>1.99</td><td>1.99</td></tr><tr><td>c2</td><td>8/8</td><td>150.53</td><td>172.87</td><td>2.92</td><td>5.28</td><td>5.28</td></tr><tr><td>c4</td><td>16/16</td><td>174.33</td><td>200.47</td><td>4.52</td><td>9.59</td><td>9.88</td></tr><tr><td>c5</td><td>20/20</td><td>235.43</td><td>270.83</td><td>5.29</td><td>6.15</td><td>6.16</td></tr><tr><td>c8</td><td>32/32</td><td>204.04</td><td>234.88</td><td>8.83</td><td>13.94</td><td>14.73</td></tr><tr><td>c16</td><td>64/64</td><td>242.93</td><td>279.79</td><td>16.15</td><td>18.93</td><td>20.41</td></tr></tbody></table></div><div class="card"><h2>dLLM stream metrics</h2><p class="subtitle">Streaming arrives in block-like chunks: 3 chunks/request in this run, with TTFT around 2.18s.</p><table><thead><tr><th>Case</th><th>TTFT</th><th>Wall</th><th>Chunks</th><th>Chars</th><th>Avg gap</th></tr></thead><tbody><tr><td>stream-0</td><td>2.40</td><td>4.25</td><td>3</td><td>2230</td><td>0.93</td></tr><tr><td>stream-1</td><td>2.22</td><td>4.51</td><td>3</td><td>2285</td><td>1.15</td></tr><tr><td>stream-2</td><td>1.93</td><td>3.83</td><td>3</td><td>1432</td><td>0.95</td></tr></tbody></table></div></section>
+<section class="grid cols"><div class="card"><h2>Depth sweep</h2><canvas id="depth"></canvas><table><thead><tr><th>Requested filler</th><th>Status</th><th>Prompt tokens</th><th>Wall s</th><th>Output</th></tr></thead><tbody><tr><td>0</td><td>PASS</td><td>33</td><td>4.43</td><td>ok</td></tr><tr><td>1024</td><td>PASS</td><td>1058</td><td>0.35</td><td>ok</td></tr><tr><td>4096</td><td>PASS</td><td>4130</td><td>0.69</td><td>ok</td></tr><tr><td>8192</td><td>PASS</td><td>8226</td><td>0.90</td><td>ok</td></tr><tr><td>16384</td><td>PASS</td><td>16418</td><td>1.80</td><td>ok</td></tr><tr><td>32768</td><td>PASS</td><td>32802</td><td>1.12</td><td>ok</td></tr><tr><td>64000</td><td>PASS</td><td>64034</td><td>29.54</td><td>ok</td></tr></tbody></table></div><div class="card"><h2>Correctness smoke</h2><table><thead><tr><th>Case</th><th>Status</th><th>Wall s</th><th>Output</th></tr></thead><tbody><tr><td>capital</td><td>PASS</td><td>4.62</td><td>Paris</td></tr><tr><td>math</td><td>PASS</td><td>0.44</td><td>12</td></tr></tbody></table><h3 style="margin-top:18px">GPU telemetry sample</h3><pre>{
+  &quot;samples&quot;: 99,
+  &quot;temp_avg_c&quot;: 64.26,
+  &quot;temp_max_c&quot;: 75.0,
+  &quot;power_avg_w&quot;: 41.4,
+  &quot;power_max_w&quot;: 60.07,
+  &quot;gpu_util_avg_pct&quot;: 63.97,
+  &quot;gpu_util_max_pct&quot;: 96.0,
+  &quot;mem_util_avg_pct&quot;: 0.0,
+  &quot;mem_util_max_pct&quot;: 0.0,
+  &quot;mem_used_max_mib&quot;: null,
+  &quot;mem_total_mib&quot;: null
+}</pre></div></section>
+<section class="grid two"><div class="card"><h2>Runtime configuration</h2><pre>VLLM_USE_V2_MODEL_RUNNER=1
+vllm serve /model \
+  --max-model-len 65536 \
+  --max-num-seqs 16 \
+  --gpu-memory-utilization 0.90 \
+  --kv-cache-dtype fp8 \
+  --load-format fastsafetensors \
+  --attention-backend TRITON_ATTN \
+  --enable-prefix-caching \
+  --diffusion-config '{"canvas_length":256}' \
+  --chat-template fixed_chat_template.jinja</pre></div><div class="card"><h2>Native kernel evidence</h2><pre>capability (12, 1)
+sm120_family True
+vllm._C OK
+(APIServer pid=1) INFO 06-10 21:08:40 [api_utils.py:273] non-default args: {&#x27;model_tag&#x27;: &#x27;/model&#x27;, &#x27;chat_template&#x27;: &#x27;fixed_chat_template.jinja&#x27;, &#x27;default_chat_template_kwargs&#x27;: {&#x27;enable_thinking&#x27;: False}, &#x27;enable_auto_tool_choice&#x27;: True, &#x27;tool_call_parser&#x27;: &#x27;g
+(EngineCore pid=247) INFO 06-10 21:08:56 [cuda.py:318] Using AttentionBackendEnum.TRITON_ATTN backend.
+(EngineCore pid=247) INFO 06-10 21:08:57 [nvfp4.py:327] Using &#x27;FLASHINFER_CUTLASS&#x27; NvFp4 MoE backend out of potential backends: [&#x27;FLASHINFER_TRTLLM&#x27;, &#x27;FLASHINFER_CUTEDSL&#x27;, &#x27;FLASHINFER_CUTEDSL_BATCHED&#x27;, &#x27;FLASHINFER_CUTLASS&#x27;, &#x27;VLLM_CUTLASS&#x27;, &#x27;MARLIN&#x27;, &#x27;EMULATION
+(EngineCore pid=247) INFO 06-10 21:08:57 [cuda.py:318] Using AttentionBackendEnum.TRITON_ATTN backend.
+## forbidden fallback count (excluding potential)</pre></div></section>
+<section class="card"><h2>Raw benchmark JSON</h2><pre>{
+  &quot;concurrency&quot;: [
+    {
+      &quot;concurrency&quot;: 1,
+      &quot;max_tokens&quot;: 256,
+      &quot;requests&quot;: 4,
+      &quot;ok&quot;: 4,
+      &quot;errors&quot;: 0,
+      &quot;wall_s&quot;: 6.9981967309977335,
+      &quot;request_throughput_rps&quot;: 0.5715758149928031,
+      &quot;output_tokens&quot;: 1024,
+      &quot;prompt_tokens&quot;: 152,
+      &quot;output_tps&quot;: 146.3234086381576,
+      &quot;total_tps&quot;: 168.0432896078841,
+      &quot;latency_avg_s&quot;: 1.7490898307487441,
+      &quot;latency_p50_s&quot;: 1.8077024669983075,
+      &quot;latency_p90_s&quot;: 1.9914409979974153,
+      &quot;latency_p95_s&quot;: 1.9914409979974153,
+      &quot;latency_max_s&quot;: 1.9914409979974153
+    },
+    {
+      &quot;concurrency&quot;: 2,
+      &quot;max_tokens&quot;: 256,
+      &quot;requests&quot;: 8,
+      &quot;ok&quot;: 8,
+      &quot;errors&quot;: 0,
+      &quot;wall_s&quot;: 13.60565697399943,
+      &quot;request_throughput_rps&quot;: 0.5879907170442481,
+      &quot;output_tokens&quot;: 2048,
+      &quot;prompt_tokens&quot;: 304,
+      &quot;output_tps&quot;: 150.5256235633275,
+      &quot;total_tps&quot;: 172.86927081100896,
+      &quot;latency_avg_s&quot;: 3.3333392605009067,
+      &quot;latency_p50_s&quot;: 2.9165487060017767,
+      &quot;latency_p90_s&quot;: 4.9149022640012845,
+      &quot;latency_p95_s&quot;: 5.284223999002279,
+      &quot;latency_max_s&quot;: 5.284223999002279
+    },
+    {
+      &quot;concurrency&quot;: 4,
+      &quot;max_tokens&quot;: 256,
+      &quot;requests&quot;: 16,
+      &quot;ok&quot;: 16,
+      &quot;errors&quot;: 0,
+      &quot;wall_s&quot;: 23.495310170001176,
+      &quot;request_throughput_rps&quot;: 0.6809869665150796,
+      &quot;output_tokens&quot;: 4096,
+      &quot;prompt_tokens&quot;: 614,
+      &quot;output_tps&quot;: 174.33266342786038,
+      &quot;total_tps&quot;: 200.46553826787655,
+      &quot;latency_avg_s&quot;: 5.451698275625176,
+      &quot;latency_p50_s&quot;: 4.517287540002144,
+      &quot;latency_p90_s&quot;: 9.594259661000251,
+      &quot;latency_p95_s&quot;: 9.594259661000251,
+      &quot;latency_max_s&quot;: 9.884317055002612
+    },
+    {
+      &quot;concurrency&quot;: 5,
+      &quot;max_tokens&quot;: 256,
+      &quot;requests&quot;: 20,
+      &quot;ok&quot;: 20,
+      &quot;errors&quot;: 0,
+      &quot;wall_s&quot;: 21.74757415700151,
+      &quot;request_throughput_rps&quot;: 0.9196428004160231,
+      &quot;output_tokens&quot;: 5120,
+      &quot;prompt_tokens&quot;: 770,
+      &quot;output_tps&quot;: 235.4285569065019,
+      &quot;total_tps&quot;: 270.8348047225188,
+      &quot;latency_avg_s&quot;: 5.292454135250227,
+      &quot;latency_p50_s&quot;: 5.293398868998338,
+      &quot;latency_p90_s&quot;: 5.9077430270008335,
+      &quot;latency_p95_s&quot;: 6.152493019999383,
+      &quot;latency_max_s&quot;: 6.164941701998032
+    },
+    {
+      &quot;concurrency&quot;: 8,
+      &quot;max_tokens&quot;: 256,
+      &quot;requests&quot;: 32,
+      &quot;ok&quot;: 32,
+      &quot;errors&quot;: 0,
+      &quot;wall_s&quot;: 40.1487403659994,
+      &quot;request_throughput_rps&quot;: 0.7970362135470559,
+      &quot;output_tokens&quot;: 8192,
+      &quot;prompt_tokens&quot;: 1238,
+      &quot;output_tps&quot;: 204.0412706680463,
+      &quot;total_tps&quot;: 234.87660917964803,
+      &quot;latency_avg_s&quot;: 9.667977921062402,
+      &quot;latency_p50_s&quot;: 8.83252136900046,
+      &quot;latency_p90_s&quot;: 13.650678451998829,
+      &quot;latency_p95_s&quot;: 13.93595442700098,
+      &quot;latency_max_s&quot;: 14.730634943000041
+    },
+    {
+      &quot;concurrency&quot;: 16,
+      &quot;max_tokens&quot;: 256,
+      &quot;requests&quot;: 64,
+      &quot;ok&quot;: 64,
+      &quot;errors&quot;: 0,
+      &quot;wall_s&quot;: 67.44244185199932,
+      &quot;request_throughput_rps&quot;: 0.9489573366938038,
+      &quot;output_tokens&quot;: 16384,
+      &quot;prompt_tokens&quot;: 2486,
+      &quot;output_tps&quot;: 242.93307819361377,
+      &quot;total_tps&quot;: 279.7941397408137,
+      &quot;latency_avg_s&quot;: 15.441163229015899,
+      &quot;latency_p50_s&quot;: 16.146196298999712,
+      &quot;latency_p90_s&quot;: 18.491502921002393,
+      &quot;latency_p95_s&quot;: 18.930748753002263,
+      &quot;latency_max_s&quot;: 20.41001914699882
+    }
+  ],
+  &quot;depth_sweep&quot;: [
+    {
+      &quot;depth_requested&quot;: 0,
+      &quot;ok&quot;: true,
+      &quot;wall_s&quot;: 4.426270674997795,
+      &quot;error&quot;: null,
+      &quot;prompt_tokens&quot;: 33,
+      &quot;completion_tokens&quot;: 6,
+      &quot;text_preview&quot;: &quot;ok&quot;
+    },
+    {
+      &quot;depth_requested&quot;: 1024,
+      &quot;ok&quot;: true,
+      &quot;wall_s&quot;: 0.34783760299978894,
+      &quot;error&quot;: null,
+      &quot;prompt_tokens&quot;: 1058,
+      &quot;completion_tokens&quot;: 6,
+      &quot;text_preview&quot;: &quot;ok&quot;
+    },
+    {
+      &quot;depth_requested&quot;: 4096,
+      &quot;ok&quot;: true,
+      &quot;wall_s&quot;: 0.6859814780000306,
+      &quot;error&quot;: null,
+      &quot;prompt_tokens&quot;: 4130,
+      &quot;completion_tokens&quot;: 6,
+      &quot;text_preview&quot;: &quot;ok&quot;
+    },
+    {
+      &quot;depth_requested&quot;: 8192,
+      &quot;ok&quot;: true,
+      &quot;wall_s&quot;: 0.9045042810030282,
+      &quot;error&quot;: null,
+      &quot;prompt_tokens&quot;: 8226,
+      &quot;completion_tokens&quot;: 6,
+      &quot;text_preview&quot;: &quot;ok&quot;
+    },
+    {
+      &quot;depth_requested&quot;: 16384,
+      &quot;ok&quot;: true,
+      &quot;wall_s&quot;: 1.7970996020012535,
+      &quot;error&quot;: null,
+      &quot;prompt_tokens&quot;: 16418,
+      &quot;completion_tokens&quot;: 6,
+      &quot;text_preview&quot;: &quot;ok&quot;
+    },
+    {
+      &quot;depth_requested&quot;: 32768,
+      &quot;ok&quot;: true,
+      &quot;wall_s&quot;: 1.1153726350021316,
+      &quot;error&quot;: null,
+      &quot;prompt_tokens&quot;: 32802,
+      &quot;completion_tokens&quot;: 6,
+      &quot;text_preview&quot;: &quot;ok&quot;
+    },
+    {
+      &quot;depth_requested&quot;: 64000,
+      &quot;ok&quot;: true,
+      &quot;wall_s&quot;: 29.54350927699852,
+      &quot;error&quot;: null,
+      &quot;prompt_tokens&quot;: 64034,
+      &quot;completion_tokens&quot;: 6,
+      &quot;text_preview&quot;: &quot;ok&quot;
+    }
+  ],
+  &quot;dllm_stream_metrics&quot;: [
+    {
+      &quot;prompt_preview&quot;: &quot;Write a 12-item checklist for publishing an optimized vLLM NVFP4 container. Be specific.&quot;,
+      &quot;max_tokens&quot;: 512,
+      &quot;wall_s&quot;: 4.254243262003001,
+      &quot;ttft_s&quot;: 2.3971286690029956,
+      &quot;stream_chunks&quot;: 3,
+      &quot;stream_chars&quot;: 2230,
+      &quot;avg_inter_chunk_s&quot;: 0.9285265364997031,
+      &quot;max_inter_chunk_s&quot;: 1.8569387850002386,
+      &quot;chunk_timeline_head&quot;: [
+        {
+          &quot;t_rel_s&quot;: 2.3971286690029956,
+          &quot;chars&quot;: 0
+        },
+        {
+          &quot;t_rel_s&quot;: 2.397242957002163,
+          &quot;chars&quot;: 1070
+        },
+        {
+          &quot;t_rel_s&quot;: 4.254181742002402,
+          &quot;chars&quot;: 1160
+        }
+      ],
+      &quot;case&quot;: 0
+    },
+    {
+      &quot;prompt_preview&quot;: &quot;Explain block diffusion inference in practical serving terms. Include latency and throughput implications.&quot;,
+      &quot;max_tokens&quot;: 512,
+      &quot;wall_s&quot;: 4.513557959002355,
+      &quot;ttft_s&quot;: 2.2220619130021078,
+      &quot;stream_chunks&quot;: 3,
+      &quot;stream_chars&quot;: 2285,
+      &quot;avg_inter_chunk_s&quot;: 1.145724206999148,
+      &quot;max_inter_chunk_s&quot;: 2.291344125998876,
+      &quot;chunk_timeline_head&quot;: [
+        {
+          &quot;t_rel_s&quot;: 2.2220619130021078,
+          &quot;chars&quot;: 0
+        },
+        {
+          &quot;t_rel_s&quot;: 2.222166201001528,
+          &quot;chars&quot;: 1160
+        },
+        {
+          &quot;t_rel_s&quot;: 4.513510327000404,
+          &quot;chars&quot;: 1125
+        }
+      ],
+      &quot;case&quot;: 1
+    },
+    {
+      &quot;prompt_preview&quot;: &quot;Give a compact benchmark report template for SM121 vLLM containers.&quot;,
+      &quot;max_tokens&quot;: 512,
+      &quot;wall_s&quot;: 3.8306240040001285,
+      &quot;ttft_s&quot;: 1.928126833998249,
+      &quot;stream_chunks&quot;: 3,
+      &quot;stream_chars&quot;: 1432,
+      &quot;avg_inter_chunk_s&quot;: 0.9512257450005563,
+      &quot;max_inter_chunk_s&quot;: 1.9024101620016154,
+      &quot;chunk_timeline_head&quot;: [
+        {
+          &quot;t_rel_s&quot;: 1.928126833998249,
+          &quot;chars&quot;: 0
+        },
+        {
+          &quot;t_rel_s&quot;: 1.9281681619977462,
+          &quot;chars&quot;: 707
+        },
+        {
+          &quot;t_rel_s&quot;: 3.8305783239993616,
+          &quot;chars&quot;: 725
+        }
+      ],
+      &quot;case&quot;: 2
+    }
+  ],
+  &quot;telemetry&quot;: {
+    &quot;samples&quot;: 99,
+    &quot;temp_avg_c&quot;: 64.26,
+    &quot;temp_max_c&quot;: 75.0,
+    &quot;power_avg_w&quot;: 41.4,
+    &quot;power_max_w&quot;: 60.07,
+    &quot;gpu_util_avg_pct&quot;: 63.97,
+    &quot;gpu_util_max_pct&quot;: 96.0,
+    &quot;mem_util_avg_pct&quot;: 0.0,
+    &quot;mem_util_max_pct&quot;: 0.0,
+    &quot;mem_used_max_mib&quot;: null,
+    &quot;mem_total_mib&quot;: null
+  },
+  &quot;correctness&quot;: [
+    {
+      &quot;case&quot;: &quot;capital&quot;,
+      &quot;ok&quot;: true,
+      &quot;wall_s&quot;: 4.621584177017212,
+      &quot;usage&quot;: {
+        &quot;prompt_tokens&quot;: 23,
+        &quot;total_tokens&quot;: 29,
+        &quot;completion_tokens&quot;: 6,
+        &quot;prompt_tokens_details&quot;: null
+      },
+      &quot;text&quot;: &quot;Paris&quot;
+    },
+    {
+      &quot;case&quot;: &quot;math&quot;,
+      &quot;ok&quot;: true,
+      &quot;wall_s&quot;: 0.44306087493896484,
+      &quot;usage&quot;: {
+        &quot;prompt_tokens&quot;: 27,
+        &quot;total_tokens&quot;: 34,
+        &quot;completion_tokens&quot;: 7,
+        &quot;prompt_tokens_details&quot;: null
+      },
+      &quot;text&quot;: &quot;12&quot;
+    }
+  ]
+}</pre></section><div class="footer"><span>@mr-r0b0t — r0b0tlab</span><span>Generated 2026-06-10 16:38:37 local time · single-model page: DiffusionGemma 26B A4B NVFP4 only</span></div></main><script>
+const DATA={"conc": [{"concurrency": 1, "max_tokens": 256, "requests": 4, "ok": 4, "errors": 0, "wall_s": 6.9981967309977335, "request_throughput_rps": 0.5715758149928031, "output_tokens": 1024, "prompt_tokens": 152, "output_tps": 146.3234086381576, "total_tps": 168.0432896078841, "latency_avg_s": 1.7490898307487441, "latency_p50_s": 1.8077024669983075, "latency_p90_s": 1.9914409979974153, "latency_p95_s": 1.9914409979974153, "latency_max_s": 1.9914409979974153}, {"concurrency": 2, "max_tokens": 256, "requests": 8, "ok": 8, "errors": 0, "wall_s": 13.60565697399943, "request_throughput_rps": 0.5879907170442481, "output_tokens": 2048, "prompt_tokens": 304, "output_tps": 150.5256235633275, "total_tps": 172.86927081100896, "latency_avg_s": 3.3333392605009067, "latency_p50_s": 2.9165487060017767, "latency_p90_s": 4.9149022640012845, "latency_p95_s": 5.284223999002279, "latency_max_s": 5.284223999002279}, {"concurrency": 4, "max_tokens": 256, "requests": 16, "ok": 16, "errors": 0, "wall_s": 23.495310170001176, "request_throughput_rps": 0.6809869665150796, "output_tokens": 4096, "prompt_tokens": 614, "output_tps": 174.33266342786038, "total_tps": 200.46553826787655, "latency_avg_s": 5.451698275625176, "latency_p50_s": 4.517287540002144, "latency_p90_s": 9.594259661000251, "latency_p95_s": 9.594259661000251, "latency_max_s": 9.884317055002612}, {"concurrency": 5, "max_tokens": 256, "requests": 20, "ok": 20, "errors": 0, "wall_s": 21.74757415700151, "request_throughput_rps": 0.9196428004160231, "output_tokens": 5120, "prompt_tokens": 770, "output_tps": 235.4285569065019, "total_tps": 270.8348047225188, "latency_avg_s": 5.292454135250227, "latency_p50_s": 5.293398868998338, "latency_p90_s": 5.9077430270008335, "latency_p95_s": 6.152493019999383, "latency_max_s": 6.164941701998032}, {"concurrency": 8, "max_tokens": 256, "requests": 32, "ok": 32, "errors": 0, "wall_s": 40.1487403659994, "request_throughput_rps": 0.7970362135470559, "output_tokens": 8192, "prompt_tokens": 1238, "output_tps": 204.0412706680463, "total_tps": 234.87660917964803, "latency_avg_s": 9.667977921062402, "latency_p50_s": 8.83252136900046, "latency_p90_s": 13.650678451998829, "latency_p95_s": 13.93595442700098, "latency_max_s": 14.730634943000041}, {"concurrency": 16, "max_tokens": 256, "requests": 64, "ok": 64, "errors": 0, "wall_s": 67.44244185199932, "request_throughput_rps": 0.9489573366938038, "output_tokens": 16384, "prompt_tokens": 2486, "output_tps": 242.93307819361377, "total_tps": 279.7941397408137, "latency_avg_s": 15.441163229015899, "latency_p50_s": 16.146196298999712, "latency_p90_s": 18.491502921002393, "latency_p95_s": 18.930748753002263, "latency_max_s": 20.41001914699882}], "depth": [{"depth_requested": 0, "ok": true, "wall_s": 4.426270674997795, "error": null, "prompt_tokens": 33, "completion_tokens": 6, "text_preview": "ok"}, {"depth_requested": 1024, "ok": true, "wall_s": 0.34783760299978894, "error": null, "prompt_tokens": 1058, "completion_tokens": 6, "text_preview": "ok"}, {"depth_requested": 4096, "ok": true, "wall_s": 0.6859814780000306, "error": null, "prompt_tokens": 4130, "completion_tokens": 6, "text_preview": "ok"}, {"depth_requested": 8192, "ok": true, "wall_s": 0.9045042810030282, "error": null, "prompt_tokens": 8226, "completion_tokens": 6, "text_preview": "ok"}, {"depth_requested": 16384, "ok": true, "wall_s": 1.7970996020012535, "error": null, "prompt_tokens": 16418, "completion_tokens": 6, "text_preview": "ok"}, {"depth_requested": 32768, "ok": true, "wall_s": 1.1153726350021316, "error": null, "prompt_tokens": 32802, "completion_tokens": 6, "text_preview": "ok"}, {"depth_requested": 64000, "ok": true, "wall_s": 29.54350927699852, "error": null, "prompt_tokens": 64034, "completion_tokens": 6, "text_preview": "ok"}]};function drawLine(id,rows,xFn,yFn,color,label){const c=document.getElementById(id),dpr=window.devicePixelRatio||1,rect=c.getBoundingClientRect();c.width=rect.width*dpr;c.height=rect.height*dpr;const ctx=c.getContext('2d');ctx.scale(dpr,dpr);const w=rect.width,h=rect.height,p=42;ctx.clearRect(0,0,w,h);ctx.fillStyle='#070710';ctx.fillRect(0,0,w,h);ctx.strokeStyle='#24243a';ctx.lineWidth=1;for(let i=0;i<5;i++){let y=p+(h-2*p)*i/4;ctx.beginPath();ctx.moveTo(p,y);ctx.lineTo(w-p,y);ctx.stroke();}const xs=rows.map(xFn),ys=rows.map(yFn).filter(v=>v!=null);const xmin=Math.min(...xs),xmax=Math.max(...xs),ymax=Math.max(...ys)*1.15;const pts=rows.map(r=>{let x=xFn(r),y=yFn(r);return[p+(x-xmin)/(xmax-xmin||1)*(w-2*p),h-p-(y||0)/(ymax||1)*(h-2*p),x,y];});ctx.strokeStyle=color;ctx.lineWidth=3;ctx.beginPath();pts.forEach((pt,i)=>{if(i)ctx.lineTo(pt[0],pt[1]);else ctx.moveTo(pt[0],pt[1]);});ctx.stroke();ctx.fillStyle=color;pts.forEach(pt=>{ctx.beginPath();ctx.arc(pt[0],pt[1],4,0,Math.PI*2);ctx.fill();});ctx.fillStyle='#9ca3af';ctx.font='12px JetBrains Mono, monospace';ctx.fillText(label,p,22);ctx.fillText('max '+Math.round(ymax),w-p-90,22);}drawLine('throughput',DATA.conc,r=>r.concurrency,r=>r.output_tps,'#00ff88','output tokens/sec by concurrency');drawLine('depth',DATA.depth.filter(r=>r.ok),r=>r.prompt_tokens,r=>r.wall_s,'#ff00e5','wall seconds by prompt tokens');
+</script></body></html>
