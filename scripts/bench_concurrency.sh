@@ -6,5 +6,20 @@ OUTDIR=${OUTDIR:-benchmarks/results}
 mkdir -p "$OUTDIR"
 for C in 1 2 4 5 8 16; do
   echo "== concurrency $C =="
-  vllm bench serve     --backend openai     --base-url "$BASE_URL"     --model "$MODEL"     --dataset-name random     --random-input-len 512     --random-output-len 1024     --num-prompts $((C * 4))     --max-concurrency "$C"     --save-result     --result-filename "$OUTDIR/concurrency-c${C}.json"
+  TMP="/tmp/concurrency-c${C}.json"
+  docker exec dgemma-vllm vllm bench serve \
+    --backend openai-chat \
+    --endpoint /v1/chat/completions \
+    --base-url "$BASE_URL" \
+    --model "$MODEL" \
+    --dataset-name random \
+    --random-input-len 512 \
+    --random-output-len 1024 \
+    --num-prompts $((C * 4)) \
+    --max-concurrency "$C" \
+    --temperature 0 \
+    --save-result \
+    --save-detailed \
+    --result-filename "$TMP"
+  docker cp "dgemma-vllm:$TMP" "$OUTDIR/concurrency-c${C}.json"
 done

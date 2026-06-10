@@ -1,0 +1,13 @@
+{
+  "samples": 99,
+  "temp_avg_c": 64.26,
+  "temp_max_c": 75.0,
+  "power_avg_w": 41.4,
+  "power_max_w": 60.07,
+  "gpu_util_avg_pct": 63.97,
+  "gpu_util_max_pct": 96.0,
+  "mem_util_avg_pct": 0.0,
+  "mem_util_max_pct": 0.0,
+  "mem_used_max_mib": null,
+  "mem_total_mib": null
+}

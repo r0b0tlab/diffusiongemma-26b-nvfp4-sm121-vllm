@@ -1,0 +1,2 @@
+{"case": "capital", "ok": true, "wall_s": 4.621584177017212, "usage": {"prompt_tokens": 23, "total_tokens": 29, "completion_tokens": 6, "prompt_tokens_details": null}, "text": "Paris"}
+{"case": "math", "ok": true, "wall_s": 0.44306087493896484, "usage": {"prompt_tokens": 27, "total_tokens": 34, "completion_tokens": 7, "prompt_tokens_details": null}, "text": "12"}
