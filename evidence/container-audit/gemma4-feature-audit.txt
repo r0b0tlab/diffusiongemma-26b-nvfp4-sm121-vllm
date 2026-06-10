@@ -1,0 +1,10 @@
+torch 2.10.0+cu129 cuda 12.9 capability (12, 1)
+vllm 0.19.1.dev6+g6d4a8e6d2
+sm120_family True
+vllm._C OK
+vllm._C_stable_libtorch OK
+vllm._moe_C OK
+diffusion_archs ['GemmaForCausalLM', 'Gemma2ForCausalLM', 'Gemma3ForCausalLM', 'Gemma3nForCausalLM', 'Gemma4ForCausalLM', 'Gemma2Model', 'Gemma3TextModel', 'Gemma3ForConditionalGeneration', 'Gemma3nForConditionalGeneration', 'Gemma4ForConditionalGeneration', 'PaliGemmaForConditionalGeneration']
+has_DiffusionGemmaForBlockDiffusion False
+num_archs 323
+transformers 5.5.0
