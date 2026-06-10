@@ -1,0 +1,14 @@
+.hermes/
+models/
+*.log
+*.tmp
+__pycache__/
+.pytest_cache/
+benchmarks/results/*.json
+benchmarks/results/*.jsonl
+benchmarks/traces/*.jsonl
+evidence/runtime/*.log
+evidence/telemetry/*.csv
+evidence/kernels/*.qdrep
+evidence/kernels/*.sqlite
+.env
